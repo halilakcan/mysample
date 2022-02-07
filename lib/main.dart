@@ -1,8 +1,3 @@
-
-
-
-
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -10,35 +5,32 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
- 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: "Test Application",
         home: Scaffold(
-        appBar: AppBar(
+          appBar: AppBar(
             title: const Text('BottomNavigationBar Sample'),
           ),
-          body:  const Body(),
+          body: const Body(),
           bottomNavigationBar: const Bottom(),
         ));
   }
 }
 
 class Body extends StatefulWidget {
- 
   const Body({Key? key}) : super(key: key);
 
   @override
- BodyState createState() => BodyState();
+  BodyState createState() => BodyState();
 }
 
-class BodySate extends State<Body> {
-   int location=0;
-   static TextStyle optionStyle =
-       const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-   final List<Widget> bodyOptions =[
+class BodyState extends State<Body> {
+  int location = 0;
+  static TextStyle optionStyle =
+      const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  final List<Widget> bodyOptions = [
     Text(
       'Index 0: Home',
       style: optionStyle,
@@ -52,20 +44,19 @@ class BodySate extends State<Body> {
       style: optionStyle,
     ),
   ];
-  
-    
- void update() {
+
+  void update() {
     setState(() {
-      location= Bottom.selectedIndex;
+      location = BottomState.selectedIndex;
     });
-    
   }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children:[ bodyOptions[BottomState.selectedIndex],
-      ElevatedButton(onPressed: update, child: const Text("Update"))]
-    );
+    return Column(children: [
+      bodyOptions[BottomState.selectedIndex],
+      ElevatedButton(onPressed: update, child: const Text("Update"))
+    ]);
   }
 }
 
@@ -73,25 +64,22 @@ class Bottom extends StatefulWidget {
   const Bottom({Key? key}) : super(key: key);
 
   @override
-  State<Bottom> createState() => BottomState();
+  BottomState createState() => BottomState();
 }
 
-class BottomState extends State<Bottom>  {
-static int selectedIndex = 0;
- final myKey = GlobalKey<BodyState>();
-void onItemTapped(int index) {
+class BottomState extends State<Bottom> {
+  static int selectedIndex = 0;
+  final myKey = GlobalKey<BodyState>();
+  void onItemTapped(int index) {
     setState(() {
-       selectedIndex = index;
+      selectedIndex = index;
     });
-final myPage = MyApp(key: myKey);
-myPage.build(context);
-myKey.currentState?.build(context);
-Navigator.push(context, MaterialPageRoute(builder: (_) => myPage));
+    final myPage = MyApp(key: myKey);
+   Navigator.push(context, MaterialPageRoute(builder: (_) => myPage));
   }
 
   @override
   Widget build(BuildContext context) {
-  
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -109,7 +97,7 @@ Navigator.push(context, MaterialPageRoute(builder: (_) => myPage));
       ],
       currentIndex: selectedIndex,
       selectedItemColor: Colors.amber[800],
-      onTap: onItemTapped ,
+      onTap: onItemTapped,
     );
   }
 }
