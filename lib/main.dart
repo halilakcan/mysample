@@ -20,25 +20,25 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
             title: const Text('BottomNavigationBar Sample'),
           ),
-          body:  const MyStatefulWidget(),
+          body:  const Body(),
           bottomNavigationBar: const Bottom(),
         ));
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
+class Body extends StatefulWidget {
  
-  const MyStatefulWidget({Key? key}) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
- _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+ BodyState createState() => BodyState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class BodySate extends State<Body> {
    int location=0;
    static TextStyle optionStyle =
        const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-   final List<Widget> _widgetOptions =[
+   final List<Widget> bodyOptions =[
     Text(
       'Index 0: Home',
       style: optionStyle,
@@ -54,17 +54,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   ];
   
     
- void _update() {
+ void update() {
     setState(() {
-      location= _Bottom._selectedIndex;
+      location= Bottom.selectedIndex;
     });
     
   }
   @override
   Widget build(BuildContext context) {
     return Column(
-      children:[ _widgetOptions[_Bottom._selectedIndex],
-      ElevatedButton(onPressed: _update, child: const Text("Update"))]
+      children:[ bodyOptions[BottomState.selectedIndex],
+      ElevatedButton(onPressed: update, child: const Text("Update"))]
     );
   }
 }
@@ -73,19 +73,19 @@ class Bottom extends StatefulWidget {
   const Bottom({Key? key}) : super(key: key);
 
   @override
-  State<Bottom> createState() => _Bottom();
+  State<Bottom> createState() => BottomState();
 }
 
-class _Bottom extends State<Bottom>  {
-static int _selectedIndex = 0;
- final myKey = GlobalKey<_MyStatefulWidgetState>();
-void _onItemTapped(int index) {
+class BottomState extends State<Bottom>  {
+static int selectedIndex = 0;
+ final myKey = GlobalKey<BodyState>();
+void onItemTapped(int index) {
     setState(() {
-       _selectedIndex = index;
+       selectedIndex = index;
     });
-    final myPage = MyApp(key: myKey);
+final myPage = MyApp(key: myKey);
 myPage.build(context);
-    myKey.currentState?.build(context);
+myKey.currentState?.build(context);
 Navigator.push(context, MaterialPageRoute(builder: (_) => myPage));
   }
 
@@ -107,9 +107,9 @@ Navigator.push(context, MaterialPageRoute(builder: (_) => myPage));
           label: 'School',
         ),
       ],
-      currentIndex: _selectedIndex,
+      currentIndex: selectedIndex,
       selectedItemColor: Colors.amber[800],
-      onTap: _onItemTapped ,
+      onTap: onItemTapped ,
     );
   }
 }
